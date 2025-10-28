@@ -6,10 +6,20 @@
 
 #include <fstream>
 #include <iostream>
+#include <vector>
 
+struct participant {
+    std::string firstName;
+    std::string lastName;
+    int age;
+    char gender;
+    int id;
+};
+
+std::vector<participant> participants;
 
 void menu();
-void newParticipant();
+void addNewParticipant();
 void collectSurvey();
 void displayParticipant(); 
 void quit();
@@ -17,6 +27,26 @@ void quit();
 int main() {
     std::cout << "Welcome to the Westlake Research Hospital StudyMor Study!\n" << std::endl;
     menu();
+}
+
+void addNewParticipant() {
+    participant newParticipant;
+    std::cout << "Enter the participant's first name: ";
+    std::getline(std::cin, newParticipant.firstName);
+    std::cout << std::endl << "Enter the participant's last name: ";
+    std::getline(std::cin, newParticipant.lastName);
+    std::cout << std::endl << "Enter " << newParticipant.firstName << " "
+              << newParticipant.lastName << "'s age: ";
+    std::cin >> newParticipant.age;
+    std::cin.ignore(1000, '\n');
+    std::cout << std::endl;
+    std::cout << std::endl << "Enter " << newParticipant.firstName << " "
+              << newParticipant.lastName << "'s gender: ";
+    std::cin >> newParticipant.gender;
+    std::cin.ignore(1000, '\n');
+    std::cout << std::endl;
+    
+    participants.push_back(newParticipant);
 }
 
 void menu() {
@@ -32,7 +62,7 @@ void menu() {
     std::cin.clear();
     switch (choice) {
         case 1:
-            //newParticipant();
+            //addNewParticipant();
             break;
         case 2:
             //collectSurvey();
