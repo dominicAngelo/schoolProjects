@@ -57,21 +57,19 @@ void addNewParticipant() {
     int newID = 1;
     newID += participants.size();
     newParticipant.participantID = newID; 
-    std::cout << "Enter the participant's first name: ";
+    std::cout << "\nEnter the participant's first name: ";
     std::cin >> newParticipant.firstName;
-    std::cout << "\nEnter the participant's last name: ";
+    std::cout << "Enter the participant's last name: ";
     std::cin >> newParticipant.lastName;
-    std::cout << "\nEnter " << newParticipant.firstName << " "
+    std::cout << "Enter " << newParticipant.firstName << " "
               << newParticipant.lastName << "'s age: ";
     std::cin >> newParticipant.age;
     std::cin.ignore(1000, '\n');
-    std::cout << std::endl;
-    std::cout << std::endl << "Enter " << newParticipant.firstName << " "
+    std::cout << "Enter " << newParticipant.firstName << " "
               << newParticipant.lastName << "'s gender: ";
     std::cin >> newParticipant.gender;
-    std::cin.ignore(1000, '\n');
-    std::cout << std::endl;
-    
+    std::cout << "\n" << std::endl;
+  
     participants.push_back(newParticipant);
 
     participantFile.open("participant.dat");
@@ -96,18 +94,29 @@ void collectSurvey() {
         std::cout << std::endl 
                   << "**************************************************\n";
     }
+
     std::cin >> idChoice;
+
     std::cout << "Ask the participant the following questions and enter their responses\n";
+    
+    std::cin.ignore(100000, '\n');
+
     std::cout << "1. Did you have any headaches using StudyMor? ";
-    std::cin >> newSurvey.headaches;
-    std::cout << "\n2. Did you have any constipation using StudyMor? ";
-    std::cin >> newSurvey.constipation;
-    std::cout << "\n3. Did you experience any difficulty sleeping while using StudyMor? ";
-    std::cin >> newSurvey.difficultySleeping;
-    std::cout << "\n4. List any other potential side effects, you experienced using StudyMor. ";
-    std::cin >> newSurvey.sideEffects;
-    std::cout << "\n5. Did you feel like you could study more using StudyMor? ";
-    std::cin >> newSurvey.canStudyMor;
+    std::getline(std::cin, newSurvey.headaches);
+
+    std::cout << "2. Did you have any constipation using StudyMor? ";
+    std::getline(std::cin, newSurvey.constipation);
+
+    std::cout << "3. Did you experience any difficulty sleeping while using StudyMor? ";
+    std::getline(std::cin, newSurvey.difficultySleeping);
+
+    std::cout << "4. List any other potential side effects, you experienced using StudyMor. ";
+    std::getline(std::cin, newSurvey.sideEffects);
+
+    std::cout << "5. Did you feel like you could study more using StudyMor? ";
+    std::getline(std::cin, newSurvey.canStudyMor);
+
+    std::cout << "\n" << std::endl;
 
     surveys.push_back(newSurvey);
 
@@ -131,10 +140,12 @@ void displayParticipants() {
         std::cout << std::endl 
                   << "**************************************************\n";
     }
+
+    std::cout << "\n" << std::endl;
 }
 
 void menu() {
-    int choice;
+    int choice = 0;
     while (choice != 4) {
         std::cout << "1. Add a New Participant\n"
                   << "2. Collect Survey for Participant\n"
@@ -143,7 +154,6 @@ void menu() {
                   << std::endl
                   << "Please enter a command to continue: ";
         std::cin >> choice;
-        std::cout << std::endl;
         std::cin.clear();
         switch (choice) {
             case 1:
@@ -156,7 +166,10 @@ void menu() {
                 displayParticipants();
                 break;
             case 4:
-                quit;
+                std::cout << "Exiting program";
+                break;
+            default:
+                std::cout << "Try again";
                 break;
         }
     }
