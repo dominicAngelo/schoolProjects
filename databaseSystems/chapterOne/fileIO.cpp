@@ -8,9 +8,6 @@
 #include <iostream>
 #include <vector>
 
-std::ofstream participantFile;
-std::ofstream surveyFile;
-
 struct participant {
     std::string firstName;
     std::string lastName;
@@ -72,7 +69,7 @@ void addNewParticipant() {
   
     participants.push_back(newParticipant);
 
-    participantFile.open("participant.dat");
+    std::ofstream participantFile("participant.dat", std::ios::app);
     participantFile << newParticipant.firstName << " " 
                     << newParticipant.lastName << " "
                     << newParticipant.age << " "
@@ -84,7 +81,7 @@ void addNewParticipant() {
 void collectSurvey() {
     survey newSurvey;
     int idChoice;
-    std::cout << "Please choose the sstudy participant\n";
+    std::cout << "Please choose the study participant\n";
     for (int i = 0; i < participants.size(); i++) {
         std::cout << "ID: " << participants[i].participantID << "\n"
                   << "Name: " << participants[i].firstName << " " << participants[i].lastName << "\n"
@@ -120,7 +117,7 @@ void collectSurvey() {
 
     surveys.push_back(newSurvey);
 
-    surveyFile.open("survey.dat");
+    std::ofstream surveyFile("survey.dat", std::ios::app);
 
     surveyFile << "Headache response: " << newSurvey.headaches << std::endl
                << "Constipation response: " << newSurvey.constipation << std::endl
@@ -131,6 +128,7 @@ void collectSurvey() {
 }
 
 void displayParticipants() {
+    int choice;
     for (int i = 0; i < participants.size(); i++) {
         std::cout << "ID: " << participants[i].participantID << "\n"
                   << "Name: " << participants[i].firstName << " " << participants[i].lastName << "\n"
@@ -142,8 +140,19 @@ void displayParticipants() {
     }
 
     std::cout << "\n" << std::endl;
-}
 
+
+    std::cout << "1. Add a New Participant\n"
+              << "2. Collect Survey for Participant\n"
+              << "3. Display Participants\n"
+              << "4. Quit\n"
+              << std::endl
+              << "Please enter a command to continue: ";
+    std::cin >> choice;
+    if (choice == 4) {
+        std::exit(EXIT_SUCCESS);
+    }
+}
 void menu() {
     int choice = 0;
     while (choice != 4) {
