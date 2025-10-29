@@ -119,6 +119,10 @@ void collectSurvey() {
 
     std::ofstream surveyFile("survey.dat", std::ios::app);
 
+    if (!(surveyFile.is_open())) {
+        std::cout << "Error! 'survey.dat' could not be opened or does not exist.";
+    }
+
     surveyFile << "Headache response: " << newSurvey.headaches << std::endl
                << "Constipation response: " << newSurvey.constipation << std::endl
                << "Difficulty sleeping response: " << newSurvey.difficultySleeping << std::endl
@@ -140,19 +144,8 @@ void displayParticipants() {
     }
 
     std::cout << "\n" << std::endl;
-
-
-    std::cout << "1. Add a New Participant\n"
-              << "2. Collect Survey for Participant\n"
-              << "3. Display Participants\n"
-              << "4. Quit\n"
-              << std::endl
-              << "Please enter a command to continue: ";
-    std::cin >> choice;
-    if (choice == 4) {
-        std::exit(EXIT_SUCCESS);
-    }
 }
+
 void menu() {
     int choice = 0;
     while (choice != 4) {
@@ -175,10 +168,9 @@ void menu() {
                 displayParticipants();
                 break;
             case 4:
-                std::cout << "Exiting program";
                 break;
             default:
-                std::cout << "Try again";
+                std::cout << "Input not valid. Please try again";
                 break;
         }
     }
