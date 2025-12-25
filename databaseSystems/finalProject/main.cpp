@@ -4,12 +4,16 @@
     Purpose: Interact with hebrews.db
 */
 
+// code is fairly straightforward so i didnt comment much
+
 #include <iostream>
 #include <vector>
 #include <sqlite3.h>
 
-using namespace std;
+using namespace std; // poor practice but trying to reduce typing
 
+
+//structs to contain in-memory data
 struct customer {
     int id;
     string firstName;
@@ -48,6 +52,8 @@ sqlite3 *db;
 
 vector<customer> customers;
 vector<roast> roasts;
+
+//function prototypes
 
 //load data
 void loadCustomers();
@@ -313,7 +319,7 @@ void loadRoasts() {
 int customerCallback(void *data, int argc, char** argv, char** columnNames) {
     customer newCustomer;
     
-    if (argv[0] != NULL && argv[1] != NULL && argv[2] != NULL && argv[3] != NULL && argv[4] != NULL &&
+    if (argv[0] != NULL && argv[1] != NULL && argv[2] != NULL && argv[3] != NULL && argv[4] != NULL && // this checks to make sure the sql statement didnt fetch NULL values and then assigns them to the struct members
         argv[5] != NULL && argv[6] != NULL && argv[7] != NULL && argv[8] != NULL && argv[9] != NULL) {
             newCustomer.id = atoi(argv[0]);
             newCustomer.firstName = argv[1];
@@ -382,19 +388,19 @@ int customerLogin() {
         int customerIndex = -1;
 
         for (int i = 0; i < customers.size(); i++) {
-            if (currentCustomer.email == customers[i].email) {
+            if (currentCustomer.email == customers[i].email) { //find the customer email and breaks immediately once found
                 customerIndex = i;
                 break;
             }
         }
 
-        if (customerIndex == -1) {
+        if (customerIndex == -1) { 
             cout << "Email not found. Please try again" << endl;
             continue;
         }
 
         while (true) {
-            cout << "Enter your password: ";
+            cout << "Enter your password: "; 
             getline(cin, currentCustomer.password);
 
             if (currentCustomer.password == "-1") {
@@ -503,7 +509,7 @@ void createSubscription(int customerIndex = -1) {
                 customers[customerIndex].hasSubscription = true;
             }
 
-            int subscriptionId = sqlite3_last_insert_rowid(db);
+            int subscriptionId = sqlite3_last_insert_rowid(db); //this fetches the most recent insert from the database and assigns the id to subscriptionId providing an easy way to obtain the id in memory
             sqlite3_finalize(statement);
             insertSubscriptionItem(subscriptionId, frequency);
         }
@@ -681,7 +687,74 @@ void addRoast() {
     sqlite3_finalize(statement);
 }
 
-void addProduct() {}
+void addProduct() {
+    const char* insertProductQuery = 
+        "INSERT INTO product ("
+        "   product_name, "
+        "   product_type, "
+        "   price, "
+        "   stock"
+        ") "
+        "VALUES (?, ?, ?, ?);";
+
+    sqlite3_stmt *statement;
+    string productName;
+    string productType;
+    double price;
+    int stock;
+
+    cout << endl << "--- Add New Product---" << endl;
+    cout << "Enter product name: ";
+    getline(cin, productName);
+    cout << "Enter product type: ";
+    getline(cin, productType);
+
+    cout << "Enter price: ";
+    cin >> price;
+    cin.ignore();
+
+    if (cin.fail() || price < 0) {
+        cout << "Invalid price entered" << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        return;
+    }
+
+    cout << "Enter the stock: ";
+    cin >> stock;
+
+    cin.ignore();
+
+    if (cin.fail() || stock < 0) {
+        cout << "Invalid price entered" << endl;
+        cin.clear();
+        cin.ignore(10000, '\n');
+        return;
+    }
+
+    int rc = sqlite3_prepare_v2(db, insertProductQuery, -1, &statement, NULL);
+
+    if (rc != SQLITE_OK) {
+        cerr << "error with perparing insert product query" << endl;
+        return;
+    }
+
+    sqlite3_bind_text(statement, 1, productName.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(statement, 2, productType.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_double(statement, 3, price);
+    sqlite3_bind_int(statement, 4, stock);
+
+
+    rc = sqlite3_step(statement);
+
+    if (rc != SQLITE_DONE) {
+        cerr << "failed to add product to database" << endl;
+    } else {
+        cout << "Successfully entered product into database" << endl;
+    }
+
+    sqlite3_finalize(statement);
+}
 
 void updateSubscription() {
     
@@ -937,6 +1010,10 @@ void updateCustomer() {
 
     int customerIndex = customerLogin();
 
+    if (customerIndex == -1) {
+        return;
+    }
+
     cout <<  endl << "--- Current Customer Info ---" << endl;
     cout << "Current Information:" << endl;
     cout << "Name: " << customers[customerIndex].firstName << " " 
@@ -955,8 +1032,9 @@ void updateCustomer() {
     cin >> choice; 
     cin.ignore();
 
-    if (choice != -1) {
+    if (choice == -1) {
         cout << "update cancelled" << endl;
+        return;
     }
 
     customer updatedCustomer;
