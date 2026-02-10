@@ -1,10 +1,6 @@
 #include "book.h"
 
-Book::Book(std::string t, std::string a, Genre g) {
-    title = t;
-    author = a;
-    genre = g;
-}
+Book::Book(std::string t, std::string a, Genre g) : title(t), author(a), genre(g) {}
 
 void Book::displayInfo() const {} // TODO: implement the displayInfo functions
 void EBook::displayInfo() const {}
