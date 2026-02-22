@@ -1,10 +1,20 @@
+#include "states.h"
+
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <cctype>
 #include <cstring>
+#include <cerrno>
+#include <cstdlib>
+#include <cstdint>
+
 #include <unistd.h>
-#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/socket.h> 
 #include <netinet/in.h>
 #include <arpa/inet.h>
+
 using namespace std;
 
 const int DEFAULT_PORT = 54321;
