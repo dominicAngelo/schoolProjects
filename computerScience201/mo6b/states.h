@@ -2,17 +2,18 @@
 #define STATES_H
 
 #include <string>
-#include <map>
+#include <unordered_map>
+#include <cctype>
 
 using namespace std;
 
-inline string getStateName(const string& abbrev) {
+inline string getStateName(const string& abbrev) { // i dont want to implement this in a .cpp rather have it here
     string key = abbrev;
     for (char& c : key) {
         c = static_cast<char>(toupper(static_cast<unsigned char>(c)));
     }
 
-    static const map<string, string> stateMap {
+    static const unordered_map<string, string> stateMap {
         {"AL", "Alabama"}, {"AK", "Alaska"}, {"AZ", "Arizona"},
         {"AR", "Arkansas"}, {"CA", "California"}, {"CO", "Colorado"},
         {"CT", "Connecticut"}, {"DE", "Delaware"}, {"FL", "Florida"},
@@ -32,15 +33,12 @@ inline string getStateName(const string& abbrev) {
         {"WI", "Wisconsin"}, {"WY", "Wyoming"}
     };
 
-    auto it = stateMap.find(key);
+    auto it = stateMap.find(key); // this will be of type unordered_map<string, string>
     if (it != stateMap.end()) {
         return it->second;
     }
 
     return "";
 }
-
-
-
 
 #endif
