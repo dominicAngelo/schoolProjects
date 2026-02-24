@@ -176,19 +176,6 @@ void collectSurvey() {
 
     // writes survey data to .dat file
     std::ofstream surveyFile("survey.dat", std::ios::app);
-<<<<<<< HEAD
-
-    if (!(surveyFile.is_open())) {
-        std::cout << "Error! 'survey.dat' could not be opened or does not exist.";
-    }
-
-    surveyFile << "Headache response: " << newSurvey.headaches << std::endl
-               << "Constipation response: " << newSurvey.constipation << std::endl
-               << "Difficulty sleeping response: " << newSurvey.difficultySleeping << std::endl
-               << "Side effects response: " << newSurvey.sideEffects << std::endl
-               << "Able to study more repsonse: " << newSurvey.canStudyMor << std::endl;
-    surveyFile.close();
-=======
     if (surveyFile.is_open()) { // checks to make sure file is open safely
         surveyFile << newSurvey.surveyID << " "
                    << newSurvey.headaches << " "
@@ -200,7 +187,6 @@ void collectSurvey() {
     } else {
         std::cerr << "Error: Could not open survey.dat\n";
     }
->>>>>>> 01903dc05b3b4f9bbcfe470bae4dbfbcb218fce4
 }
 
 void displayParticipants() { // uses the participants vector to output all participant data in a loop
@@ -241,10 +227,7 @@ void menu() {
                 displayParticipants();
                 break;
             case 4:
-<<<<<<< HEAD
-=======
                 std::exit(EXIT_SUCCESS); //exits the program
->>>>>>> 01903dc05b3b4f9bbcfe470bae4dbfbcb218fce4
                 break;
             default:
                 std::cout << "Input not valid. Please try again";
