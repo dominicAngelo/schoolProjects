@@ -3,6 +3,7 @@
 
 #include <string>
 #include <ctime>
+// FIXME: does transaction only mark when a book was taken, received or both??
 
 class Transaction {
     int patronId;

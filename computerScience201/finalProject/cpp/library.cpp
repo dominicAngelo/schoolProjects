@@ -1,12 +1,23 @@
 #include "library.h"
+#include <fstream>
+#include <iostream>
+#include <string>
 
 // TODO implement library constructor if needed
+
+std::vector<Book> books;
+int booksRead;
+
+std::ifstream booksFile("books.txt");
+std::ifstream patronsFile("patrons.txt");
+
+void Library::addBook(Book *b) {
+
+}
 
 void Library::loadData() {} // TODO implement loadData()
 
 void Library::saveData() {} // TODO implement saveData()
-
-void Library::addBook(Book *b) {} // TODO implement addBook()
 
 void Library::addPatron(const Patron &p) {} // TODO implement addPatron()
 
