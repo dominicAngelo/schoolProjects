@@ -1,4 +1,4 @@
-#include "patron.h"
+#include "../include/patron.h"
 
 Patron::Patron(std::string n, int i) : name(n), id(i) {
     // set the values and do nothing

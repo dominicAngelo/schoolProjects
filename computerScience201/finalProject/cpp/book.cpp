@@ -30,6 +30,16 @@ BookStatus Book::getStatus() const {
     return status;
 }
 
+Genre Book::stringToGenre(const std::string& genreString) {
+    Genre result;
+    genreString == "Fiction" ? result = Genre::Fiction : result;
+    genreString == "NonFiction" ? result = Genre::NonFiction : result;
+    genreString == "Mystery" ? result = Genre::Mystery : result;
+    genreString == "Science" ? result = Genre::Science : result;
+    genreString == "Biography" ? result = Genre::Biography : result;
+    return result;
+}
+
 // TODO: implement operator overload functions
 
 EBook::EBook(std::string t, std::string a, Genre g, double size) : Book(t, a, g), fileSizeMB(size) {
