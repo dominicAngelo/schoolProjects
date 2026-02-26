@@ -3,19 +3,21 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 
 // TODO implement library constructor if needed
 
 std::vector<Book*> books;
+std::vector<Patron> patrons;
 int booksRead = 0;
-
-std::ifstream patronsFile("patrons.txt");
+int patronsRead = 0;
 
 Book readBook(int &booksRead, Library &library) {
     std::ifstream booksFile("books.txt");
 
     if (!booksFile.is_open()) {
         std::cerr << "!!! ERROR !!! books.txt could not be found" << std::endl;
+        abort();
     }
 
     std::string line;
@@ -56,7 +58,32 @@ void Library::loadData() {} // TODO implement loadData()
 
 void Library::saveData() {} // TODO implement saveData()
 
-void Library::addPatron(const Patron &p) {} // TODO implement addPatron()
+void Library::addPatron(const Patron &p) {
+    std::ifstream patronsFile("patrons.txt");
+    int counter;
+
+    if (!patronsFile.is_open()) {
+        std::cerr << "!!! ERROR !!! could not open patrons.txt" << std::endl;
+        abort();
+    }
+
+    std::string line;
+    std::string id, name;
+    while (std::getline(patronsFile, line)) {
+
+        if (line.empty()) {
+            continue;
+        } else if (counter == (booksRead + 1)) {
+            std::stringstream bookLine(line);
+            std::getline(bookLine, id, ',');
+            std::getline(bookLine, name, ',');
+            patronsRead++;
+            Patron patron(name, std::stoi(id));
+            patrons.push_back(patron);
+        }
+        counter++;
+    }
+}
 
 void Library::checkoutBook(int patronId, std::string title) {} // TODO implement checkoutBook()
 
