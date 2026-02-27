@@ -89,6 +89,10 @@ void Library::checkoutBook(int patronId, std::string title) {} // TODO implement
 
 void Library::returnBook(int patronId, std::string title) {} // TODO implement returnBook()
 
-void Library::displayBooks() const {} // TODO implement displayBooks()
+void Library::displayBooks() const {
+    for (int i = 0; i < books.size(); i++) {
+        books.at(i)->displayInfo();
+    }
+}
 
 void Library::displayPatrons() const {} // TODO implement displayPatrons()
