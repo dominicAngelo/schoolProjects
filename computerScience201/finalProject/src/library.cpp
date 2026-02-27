@@ -95,4 +95,8 @@ void Library::displayBooks() const {
     }
 }
 
-void Library::displayPatrons() const {} // TODO implement displayPatrons()
+void Library::displayPatrons() const {
+    for (int i = 0; i < patrons.size(); i++) {
+        patrons.at(i).displayPatron();
+    }
+}
