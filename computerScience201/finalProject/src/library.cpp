@@ -50,6 +50,11 @@ Book readBook(int &booksRead, Library &library) {
     }
 }
 
+/* !!! FIXME !!!
+    does add book take user input about a book and add it to books.txt
+    the load data functionality will take place of readBook??
+*/
+
 void Library::addBook(Book *b) {
     books.push_back(b);
 }
