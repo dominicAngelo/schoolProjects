@@ -77,7 +77,19 @@ void Library::loadPatrons(int &patronsRead) {
 }
 
 void Library::addBook(Book *b) {
-    // TODO implement user input to take input
+
+    std::string title, author, genre, value;
+    std::cout << "Enter the book title: " << std::endl;
+    std::getline(std::cin, title);
+    std::cout << "Enter the author" << std::endl;
+    std::getline(std::cin, author);
+
+    while (true) {
+        std::cout << "Enter the genre" << std::endl;
+        std::getline(std::cin, genre);
+        if ()
+    }
+    
 }
 
 void Library::loadData() {
