@@ -1,18 +1,17 @@
 #include "library.h"
+
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <string>
 #include <sstream>
-#include <cstdlib>
-
-// TODO implement library constructor if needed
+#include <string>
 
 std::vector<Book*> books;
 std::vector<Patron> patrons;
 int booksRead = 0;
 int patronsRead = 0;
 
-Book readBook(int &booksRead, Library &library) {
+void Library::loadBooks(int &booksRead) {
     std::ifstream booksFile("books.txt");
 
     if (!booksFile.is_open()) {
@@ -40,30 +39,17 @@ Book readBook(int &booksRead, Library &library) {
 
             if (type == "EBook") {
                 Book* eBook = new EBook(title, author, Book::stringToGenre(genre), std::stod(value));
-                library.addBook(eBook);
+                this->books.push_back(eBook);
             } else if (type == "Printed") {
                 Book* pBook = new PrintedBook(title, author, Book::stringToGenre(genre), std::stoi(value));
-                library.addBook(pBook);
+                this->books.push_back(pBook);
             }
         }
         counter++;
     }
 }
 
-/* !!! FIXME !!!
-    does add book take user input about a book and add it to books.txt
-    the load data functionality will take place of readBook??
-*/
-
-void Library::addBook(Book *b) {
-    books.push_back(b);
-}
-
-void Library::loadData() {} // TODO implement loadData()
-
-void Library::saveData() {} // TODO implement saveData()
-
-void Library::addPatron(const Patron &p) {
+void Library::loadPatrons(int &patronsRead) {
     std::ifstream patronsFile("patrons.txt");
     int counter;
 
@@ -88,6 +74,21 @@ void Library::addPatron(const Patron &p) {
         }
         counter++;
     }
+}
+
+void Library::addBook(Book *b) {
+    // TODO implement user input to take input
+}
+
+void Library::loadData() {
+    loadBooks(booksRead);
+    loadPatrons(patronsRead);
+}
+
+void Library::saveData() {} // TODO implement saveData()
+
+void Library::addPatron(const Patron &p) {
+  
 }
 
 void Library::checkoutBook(int patronId, std::string title) {} // TODO implement checkoutBook()
