@@ -79,6 +79,7 @@ void Library::loadPatrons(int &patronsRead) {
 void Library::addBook(Book *b) {
 
     std::string title, author, genre, value;
+    std::string type;
     std::cout << "Enter the book title: " << std::endl;
     std::getline(std::cin, title);
     std::cout << "Enter the author" << std::endl;
@@ -87,9 +88,36 @@ void Library::addBook(Book *b) {
     while (true) {
         std::cout << "Enter the genre" << std::endl;
         std::getline(std::cin, genre);
-        if ()
+        if (genre != "Fiction" && genre != "NonFiction" && genre != "Mystery" && genre != "Science" && genre != "Biography") {
+            std::cout << "Invalid genre. Please enter: Fiction, Non-Fiction, Science, or History." << std::endl;
+        } else {
+            break;
+        }
     }
-    
+
+    std::cout << "Enter book type (EBook or Printed): " << std::endl;
+
+    while (true) {
+        std::getline(std::cin, type);
+
+        if (type != "EBook" && type != "Printed") {
+            std::cout << "Invalid book type. Please enter: EBook or Printed." << std::endl;
+        } else {
+            break;
+        }
+    }
+
+    if (type == "EBook") {
+        std::cout << "Enter the download size (MB): " << std::endl;
+        std::getline(std::cin, value);
+        Book* eBook = new EBook(title, author, Book::stringToGenre(genre), std::stod(value));
+        this->books.push_back(eBook);
+    } else if (type == "Printed") {
+        std::cout << "Enter book size (pages): " << std::endl;
+        std::getline(std::cin, value);
+        Book* pBook = new PrintedBook(title, author, Book::stringToGenre(genre), std::stoi(value));
+        this->books.push_back(pBook);
+    }
 }
 
 void Library::loadData() {
@@ -97,10 +125,16 @@ void Library::loadData() {
     loadPatrons(patronsRead);
 }
 
-void Library::saveData() {} // TODO implement saveData()
+void Library::saveData() {}
 
 void Library::addPatron(const Patron &p) {
-  
+    std::string name;
+    int id = patrons.size() + 1;
+
+    std::cout << "Enter the patron's name: " << std::endl;
+    std::getline(std::cin, name);
+    Patron patron(name, id);
+    patrons.push_back(patron);
 }
 
 void Library::checkoutBook(int patronId, std::string title) {} // TODO implement checkoutBook()
