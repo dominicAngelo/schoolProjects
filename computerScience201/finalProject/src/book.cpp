@@ -40,7 +40,51 @@ Genre Book::stringToGenre(const std::string& genreString) {
     return result;
 }
 
-// TODO: implement operator overload functions
+std::string Book::getGenre() const {
+    switch(genre) {
+        case Genre::Fiction: return "Fiction";
+        case Genre::NonFiction: return "NonFiction";
+        case Genre::Mystery: return "Mystery";
+        case Genre::Science: return "Science";
+        case Genre::Biography: return "Biography";
+    }
+}
+
+std::string Book::getTitle() const {
+    return title;
+}
+
+std::string Book::getAuthor() const {
+    return author;
+}
+
+std::string EBook::getType() const {
+    return "EBook";
+}
+
+std::string EBook::getValue() const {
+    return std::to_string(fileSizeMB);
+}
+
+std::string PrintedBook::getType() const {
+    return "Printed";
+}
+
+std::string PrintedBook::getValue() const {
+    return std::to_string(pageCount);
+}
+
+std::string Book::getType() const {
+    return "Book";
+}
+
+bool Book::operator==(const Book& other) const {
+    return title == other.title && author == other.author && genre == other.genre;
+}
+
+std::ostream& operator<<(std::ostream& out, const Book& book) {
+    out << book.getGenre() << "," << book.getTitle() << "," << book.getAuthor() << "," << book.getType() << "," << book.getValue() << std::endl;
+}
 
 EBook::EBook(std::string t, std::string a, Genre g, double size) : Book(t, a, g), fileSizeMB(size) {
     // set the values and do nothing

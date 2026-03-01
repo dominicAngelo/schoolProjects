@@ -16,7 +16,7 @@ void Library::loadBooks(int &booksRead) {
 
     if (!booksFile.is_open()) {
         std::cerr << "!!! ERROR !!! books.txt could not be found" << std::endl;
-        abort();
+        return;
     }
 
     std::string line;
@@ -51,11 +51,11 @@ void Library::loadBooks(int &booksRead) {
 
 void Library::loadPatrons(int &patronsRead) {
     std::ifstream patronsFile("patrons.txt");
-    int counter;
+    int counter = 0;
 
     if (!patronsFile.is_open()) {
         std::cerr << "!!! ERROR !!! could not open patrons.txt" << std::endl;
-        abort();
+        return;
     }
 
     std::string line;
@@ -64,10 +64,10 @@ void Library::loadPatrons(int &patronsRead) {
 
         if (line.empty()) {
             continue;
-        } else if (counter == (booksRead + 1)) {
-            std::stringstream bookLine(line);
-            std::getline(bookLine, id, ',');
-            std::getline(bookLine, name, ',');
+        } else if (counter == (patronsRead + 1)) {
+            std::stringstream patronLine(line);
+            std::getline(patronLine, id, ',');
+            std::getline(patronLine, name, ',');
             patronsRead++;
             Patron patron(name, std::stoi(id));
             patrons.push_back(patron);
@@ -125,7 +125,31 @@ void Library::loadData() {
     loadPatrons(patronsRead);
 }
 
-void Library::saveData() {}
+void Library::saveData() {
+    std::ofstream booksFile("books.txt");
+    std::ofstream patronsFile("patrons.txt");
+
+    if (!booksFile.is_open()) {
+        std::cerr << "!!! ERROR !!! could not open books.txt in function saveData()" << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < books.size(); i++) {
+        booksFile << books.at(i)->getGenre() << "," << books.at(i)->getTitle() << "," << books.at(i)->getAuthor() << "," << books.at(i)->getType() << "," << books.at(i)->getValue() << std::endl;
+    }
+
+    booksFile.close();
+
+    if (!patronsFile.is_open()) {
+        std::cerr << "!!! ERROR !!! could not open patrons.txt in function saveData()" << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < patrons.size(); i++) {
+        patronsFile << patrons.at(i).getId() << "," << patrons.at(i).getName() << std::endl;
+    }
+    patronsFile.close();
+}
 
 void Library::addPatron(const Patron &p) {
     std::string name;

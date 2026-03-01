@@ -24,6 +24,12 @@ class Book {
 
     bool operator==(const Book& other) const;
     friend std::ostream& operator<<(std::ostream& os, const Book& b);
+
+    std::string getGenre() const;
+    std::string getTitle() const;
+    std::string getAuthor() const;
+    virtual std::string getType() const;
+    virtual std::string getValue() const;
 };
 
 class EBook : public Book {
@@ -31,6 +37,8 @@ class EBook : public Book {
     public: 
         EBook(std::string t, std::string a, Genre g, double size);
         void displayInfo() const override;
+        std::string getType() const override;
+        std::string getValue() const override;
 };
 
 class PrintedBook : public Book {
@@ -38,7 +46,8 @@ class PrintedBook : public Book {
     public:
         PrintedBook(std::string t, std::string a, Genre g, int pages);
         void displayInfo() const override;
+        std::string getType() const override;
+        std::string getValue() const override;
 };
-
 
 #endif
