@@ -161,9 +161,13 @@ void Library::addPatron(const Patron &p) {
     patrons.push_back(patron);
 }
 
-void Library::checkoutBook(int patronId, std::string title) {} // TODO implement checkoutBook()
+void Library::checkoutBook(int patronId, std::string title) {
+    // call patron.borrowBook()
+} // TODO implement checkoutBook()
 
-void Library::returnBook(int patronId, std::string title) {} // TODO implement returnBook()
+void Library::returnBook(int patronId, std::string title) {
+    // call patron.returnBook()
+} // TODO implement returnBook()
 
 void Library::displayBooks() const {
     for (int i = 0; i < books.size(); i++) {
