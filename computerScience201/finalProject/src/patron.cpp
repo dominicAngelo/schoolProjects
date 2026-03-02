@@ -15,9 +15,9 @@ std::string Patron::getName() const {
     return name;
 }
 
-void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks) {
-    std::cout << "Please enter the title of the book to borrow: ";
-    std::string title;
+void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks) { //we will use the time to make a new transaction,  
+    std::cout << "Please enter the title of the book to borrow: ";   //we will have to convert ctime current time to our current time class and use that when creating a transaction
+    std::string title;                                               // we will add thirty days to current time for the due date
     std::getline(std::cin, title);
     for (int i = 0; i < libraryBooks.size(); i++) {
 
