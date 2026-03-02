@@ -1,35 +1,34 @@
 #include <iostream>
-#include "myNetUtil.h"
 #include <string>
-#include <cstring>
-#include <cctype>
-#include <cstdlib>
-#include <unistd.h>
-#include <sys/socket.h> 
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include "myNetUtil.h"
 
 using namespace std;
 
-const int DEFAULT_PORT = 54321;
-
 int main(int argc, char* argv[]) {
+    WSADATA wsaData;
 
-    string response;
+    if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+        cerr << "WSAStartup failed" << endl;
+        return 1;
+    }
 
     string serverIP = "127.0.0.1";
     int port = 54321;
 
-    if (argc >= 2) serverIP = argv[1]; // if specific IP nad port values are given assign them here
-    if (argc >= 3) port = stoi(argv[2]); 
+    if (argc >= 2) {
+        serverIP = argv[1];
+    } else if (argc >= 3) {
+        port = stoi(argv[2]);
+    }
 
     cout << "State Lookup Client IP: " << serverIP << " on port " << port << endl;
 
-    string input;
+    string input, response;
 
     while (true) {
         cout << "Enter state abbreviation or q to quit: ";
-        if (!getline(cin, input) || input.empty()) {
+
+        if (!getline(cin, input) || input.empty()) { 
             break;
         }
 
@@ -38,31 +37,37 @@ int main(int argc, char* argv[]) {
         }
 
         if (input == "Q" || input == "EXIT") {
-            break;
+             break;
         }
 
-        int socket = socket(AF_INET, SOCK_STREAM, 0);
+        SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-        sockaddr_in address = {0};
-        address.sin_family = AF_INET;
-        address.sin_port = htons(port);
-
-        inet_pton(AF_INET, serverIP.c_str(), &address.sin_addr);
-
-        if (connect(socket, (sockaddr*)&address, sizeof(address)) < 0) {
-            perror("Connect failed");
-            close(socket);
+        if (sock == INVALID_SOCKET) {
+            cerr << "Socket creation failed." << endl;
             continue;
         }
 
-        if (sendFrame(socket, input)) {
-            if(receiveFrame(socket, response)) {
+        sockaddr_in address = {0};
+        address.sin_family = AF_INET;
+        address.sin_port = htons((u_short)port);
+        
+        inet_pton(AF_INET, serverIP.c_str(), &address.sin_addr);
+
+        if (connect(sock, (sockaddr*)&address, sizeof(address)) == SOCKET_ERROR) {
+            cerr << "Connection failed!! Error: " << WSAGetLastError() << endl;
+            closesocket(sock);
+            continue;
+        }
+
+        if (sendFrame(sock, input)) {
+            if(receiveFrame(sock, response)) {
                 cout << "Result: " << response << "\n" << endl;
             }
         }
 
-        close(socket);
+        closesocket(sock);
     }
 
+    WSACleanup();
     return 0;
 }
