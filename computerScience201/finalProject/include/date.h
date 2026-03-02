@@ -12,9 +12,8 @@ class Date {
         Date(int d, int m, int y);
         std::string toString() const;
         
-
-        bool operator>=(const Date& other) const;
-        bool operator<=(const Date& other) const;
+        bool operator>(const Date& other) const;
+        bool operator<(const Date& other) const;
         bool operator==(const Date& other) const;
 };
 
