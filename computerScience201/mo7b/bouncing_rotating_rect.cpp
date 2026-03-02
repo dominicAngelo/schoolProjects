@@ -7,18 +7,18 @@ int main() {
 
     float RW = 100.0f;
     float RH = 60.0f;
-    sf::RectangleShape rect1({RW, RH});
+    sf::RectangleShape rectangle({RW, RH});
 
-    //rect1.setOrigin({RW / 2.0f, RH / 2.0f});
-    rect1.setOrigin({0, 0});
+    rectangle.setOrigin({RW / 2.0f, RH / 2.0f});
 
-    rect1.setPosition({0, 0});
+    rectangle.setPosition({0, 0});
 
-    rect1.setFillColor(sf::Color::Transparent);
-    rect1.setOutlineColor(sf::Color::White);
-    rect1.setOutlineThickness(2.0f);
+    rectangle.setFillColor(sf::Color::Transparent);
+    rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setOutlineThickness(2.0f);
 
-    float speed = 0.01f; 
+    float moveSpeed = 0.01f; 
+    float rotateSpeed = 0.1f;
 
     while (window.isOpen()) {
         while (const std::optional event = window.pollEvent()) {
@@ -26,14 +26,15 @@ int main() {
                 window.close();
         }
 
-        rect1.move({speed, speed});
+        rectangle.move({moveSpeed, moveSpeed});
+        rectangle.rotate(sf::degrees(rotateSpeed));
 
-        if (rect1.getPosition().x + RW >= PW || rect1.getPosition().x <= 0) {
-            speed = -speed;
+        if (rectangle.getPosition().x + RW >= PW || rectangle.getPosition().x <= 0) {
+            moveSpeed = -moveSpeed;
         }
 
         window.clear(sf::Color::Black);
-        window.draw(rect1); 
+        window.draw(rectangle); 
         window.display();
     }
 
