@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include <string>
+#include <ctime>
 
 class Date {
     int day;
