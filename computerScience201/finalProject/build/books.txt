@@ -1,2 +1,3 @@
 Fiction,The Great Gatsby,F. Scott Fitzgerald,Printed,180
-Science,Quantum Physics 101,Albert Einstein,EBook,4.5
+Science,Quantum Physics 101,Albert Einstein,EBook,4.500000
+Fiction,Harry Potter,J.K Rowling,Printed,500

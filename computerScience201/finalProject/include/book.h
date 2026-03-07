@@ -21,6 +21,7 @@ class Book {
     void setStatus(BookStatus s);
     BookStatus getStatus() const;
     static Genre stringToGenre(const std::string& genreString);
+    static std::string genreToString(Genre g);
 
     bool operator==(const Book& other) const;
     friend std::ostream& operator<<(std::ostream& os, const Book& b);

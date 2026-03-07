@@ -44,11 +44,11 @@ void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks) {
     std::string title;
     std::getline(std::cin, title);
 
-    for (int i = 0; i < borrowedBooks.size(); i++) {
-        if (borrowedBooks[i]->getTitle() == title) {
-            Book *bookToReturn = borrowedBooks[i];
+    for (int i = 0; i < this->borrowedBooks.size(); i++) {
+        if (this->borrowedBooks[i]->getTitle() == title) {
+            Book *bookToReturn = this->borrowedBooks[i];
             bookToReturn->setStatus(BookStatus::Available);
-            borrowedBooks.erase(borrowedBooks.begin() + i); // TODO: this function should be creating a transaction object.
+            this->borrowedBooks.erase(this->borrowedBooks.begin() + i); // TODO: this function should be creating a transaction object.
             std::cout << "You have returned the book: " << title << std::endl;
             return;
         }

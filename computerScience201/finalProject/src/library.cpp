@@ -19,37 +19,33 @@ void Library::loadBooks(int &booksRead) {
 
     std::string line;
     std::string genre, title, author, type, value;
-    int counter = 0;
 
     while (std::getline(booksFile, line)) {
 
         if (line.empty()) {
             continue;
-        } else if (counter == (booksRead)) {
-            std::stringstream bookLine(line);
-            std::getline(bookLine, genre, ',');
-            std::getline(bookLine, title, ',');
-            std::getline(bookLine, author, ',');
-            std::getline(bookLine, type, ',');
-            std::getline(bookLine, value, ',');
+        }  
+        std::stringstream bookLine(line);
+        std::getline(bookLine, genre, ',');
+        std::getline(bookLine, title, ',');
+        std::getline(bookLine, author, ',');
+        std::getline(bookLine, type, ',');
+        std::getline(bookLine, value, ',');
 
-            booksRead++;
+        booksRead++;
 
-            if (type == "EBook") {
-                Book* eBook = new EBook(title, author, Book::stringToGenre(genre), std::stod(value));
-                this->books.push_back(eBook);
-            } else if (type == "Printed") {
-                Book* pBook = new PrintedBook(title, author, Book::stringToGenre(genre), std::stoi(value));
-                this->books.push_back(pBook);
-            }
+        if (type == "EBook") {
+            Book* eBook = new EBook(title, author, Book::stringToGenre(genre), std::stod(value));
+            this->books.push_back(eBook);
+        } else if (type == "Printed") {
+            Book* pBook = new PrintedBook(title, author, Book::stringToGenre(genre), std::stoi(value));
+            this->books.push_back(pBook);
         }
-        counter++;
     }
 }
 
 void Library::loadPatrons(int &patronsRead) {
     std::ifstream patronsFile("patrons.txt");
-    int counter = 0;
 
     if (!patronsFile.is_open()) {
         std::cerr << "!!! ERROR !!! could not open patrons.txt on line 55" << std::endl;
@@ -62,15 +58,12 @@ void Library::loadPatrons(int &patronsRead) {
 
         if (line.empty()) {
             continue;
-        } else if (counter == (patronsRead)) {
-            std::stringstream patronLine(line);
-            std::getline(patronLine, id, ',');
-            std::getline(patronLine, name, ',');
-            patronsRead++;
-            Patron patron(name, std::stoi(id));
-            patrons.push_back(patron);
         }
-        counter++;
+        std::stringstream patronLine(line);
+        std::getline(patronLine, id, ',');
+        std::getline(patronLine, name, ',');
+        Patron patron(name, std::stoi(id));
+        patrons.push_back(patron);
     }
 }
 

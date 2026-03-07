@@ -3,9 +3,20 @@
 
 Book::Book(std::string t, std::string a, Genre g) : title(t), author(a), genre(g) {}
 
+std::string Book::genreToString(Genre g) {
+    switch(g) {
+        case Genre::Fiction: return "Fiction";
+        case Genre::NonFiction: return "NonFiction";
+        case Genre::Mystery: return "Mystery";
+        case Genre::Science: return "Science";
+        case Genre::Biography: return "Biography";
+    }
+    return "Unknown";
+}
+
 void Book::displayInfo() const {
     std::cout << title << " by " << author << std::endl;
-    std::cout << static_cast<int>(genre) << " " << static_cast<int>(status) << std::endl;
+    std::cout << Book::genreToString(genre) << " " << static_cast<int>(status) << std::endl;
 }
 
 void EBook::displayInfo() const {
