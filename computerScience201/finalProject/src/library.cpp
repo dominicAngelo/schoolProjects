@@ -8,8 +8,8 @@
 
 std::vector<Book*> books;
 std::vector<Patron> patrons;
-int booksRead = 0;
-int patronsRead = 0;
+int Library::booksRead = 0;
+int Library::patronsRead = 0;
 
 void Library::loadBooks(int &booksRead) {
     std::ifstream booksFile("books.txt");

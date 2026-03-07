@@ -72,12 +72,17 @@ std::string Book::getType() const {
     return "Book";
 }
 
+std::string Book::getValue() const {
+    return "";
+}
+
 bool Book::operator==(const Book& other) const {
     return title == other.title && author == other.author && genre == other.genre;
 }
 
 std::ostream& operator<<(std::ostream& out, const Book& book) {
     out << book.getGenre() << "," << book.getTitle() << "," << book.getAuthor() << "," << book.getType() << "," << book.getValue() << std::endl;
+    return out;
 }
 
 EBook::EBook(std::string t, std::string a, Genre g, double size) : Book(t, a, g), fileSizeMB(size) {
