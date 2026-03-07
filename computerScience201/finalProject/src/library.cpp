@@ -6,8 +6,6 @@
 #include <sstream>
 #include <string>
 
-std::vector<Book*> books;
-std::vector<Patron> patrons;
 int Library::booksRead = 0;
 int Library::patronsRead = 0;
 
@@ -15,7 +13,7 @@ void Library::loadBooks(int &booksRead) {
     std::ifstream booksFile("books.txt");
 
     if (!booksFile.is_open()) {
-        std::cerr << "!!! ERROR !!! books.txt could not be found" << std::endl;
+        std::cerr << "!!! ERROR !!! books.txt could not be found on line 16" << std::endl;
         return;
     }
 
@@ -27,7 +25,7 @@ void Library::loadBooks(int &booksRead) {
 
         if (line.empty()) {
             continue;
-        } else if (counter == (booksRead + 1)) {
+        } else if (counter == (booksRead)) {
             std::stringstream bookLine(line);
             std::getline(bookLine, genre, ',');
             std::getline(bookLine, title, ',');
@@ -54,7 +52,7 @@ void Library::loadPatrons(int &patronsRead) {
     int counter = 0;
 
     if (!patronsFile.is_open()) {
-        std::cerr << "!!! ERROR !!! could not open patrons.txt" << std::endl;
+        std::cerr << "!!! ERROR !!! could not open patrons.txt on line 55" << std::endl;
         return;
     }
 
@@ -64,7 +62,7 @@ void Library::loadPatrons(int &patronsRead) {
 
         if (line.empty()) {
             continue;
-        } else if (counter == (patronsRead + 1)) {
+        } else if (counter == (patronsRead)) {
             std::stringstream patronLine(line);
             std::getline(patronLine, id, ',');
             std::getline(patronLine, name, ',');
@@ -191,4 +189,11 @@ void Library::displayPatrons() const {
     for (int i = 0; i < patrons.size(); i++) {
         patrons.at(i).displayPatron();
     }
+}
+
+Library::~Library() {
+    for (Book* book : books) {
+        delete book;
+    }
+    books.clear();
 }

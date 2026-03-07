@@ -15,7 +15,6 @@ int main() {
         std::cout << "4. Add Patron" << std::endl;
         std::cout << "5. Checkout Book" << std::endl;
         std::cout << "6. Return Book" << std::endl;
-        std::cout << "7. Exit" << std::endl;
         std::cout << "7. Save & Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
@@ -44,7 +43,8 @@ int main() {
             library.returnBook(id, "");
         } else if (choice == 7) {
             library.saveData();
+            return 0;
         }
-        return 0;
     }
+    return 0;
 }

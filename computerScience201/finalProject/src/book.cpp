@@ -9,10 +9,12 @@ void Book::displayInfo() const {
 }
 
 void EBook::displayInfo() const {
+    Book::displayInfo();
     std::cout << "Book download size: " << fileSizeMB << std::endl;
 }
 
 void PrintedBook::displayInfo() const {
+    Book::displayInfo();
     std::cout << "Pages: " << pageCount << std::endl;
 }
 
@@ -41,6 +43,7 @@ std::string Book::getGenre() const {
         case Genre::Science: return "Science";
         case Genre::Biography: return "Biography";
     }
+    return "Unknown";
 }
 
 std::string Book::getTitle() const {
