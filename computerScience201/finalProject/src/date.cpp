@@ -23,12 +23,10 @@ bool Date::operator>(const Date& other) const {
 }
 
 bool Date::operator<(const Date& other) const {
-    if (this > &other) {
-        return false;
-    } else if (this == &other) {
+    if (*this == other) {
         return false;
     } else {
-        return true;
+        return !(*this > other);
     }
 }
 

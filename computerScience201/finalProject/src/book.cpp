@@ -25,13 +25,12 @@ BookStatus Book::getStatus() const {
 }
 
 Genre Book::stringToGenre(const std::string& genreString) {
-    Genre result;
-    genreString == "Fiction" ? result = Genre::Fiction : result;
-    genreString == "NonFiction" ? result = Genre::NonFiction : result;
-    genreString == "Mystery" ? result = Genre::Mystery : result;
-    genreString == "Science" ? result = Genre::Science : result;
-    genreString == "Biography" ? result = Genre::Biography : result;
-    return result;
+    if (genreString == "Fiction") return Genre::Fiction;
+    if (genreString == "NonFiction") return Genre::NonFiction;
+    if (genreString == "Mystery") return Genre::Mystery;
+    if (genreString == "Science") return Genre::Science;
+    if (genreString == "Biography") return Genre::Biography;
+    return Genre::Fiction;
 }
 
 std::string Book::getGenre() const {
