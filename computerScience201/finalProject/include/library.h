@@ -26,6 +26,7 @@ class Library {
         void returnBook(int patronId, std::string title);
         void displayBooks() const;
         void displayPatrons() const;
+        void displayTransactions() const;
 };
 
 #endif

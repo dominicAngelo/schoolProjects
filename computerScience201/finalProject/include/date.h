@@ -12,6 +12,8 @@ class Date {
     public:
         Date(int d, int m, int y);
         std::string toString() const;
+
+        static Date getCurrentDate();
         
         bool operator>(const Date& other) const;
         bool operator<(const Date& other) const;

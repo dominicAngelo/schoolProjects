@@ -10,9 +10,10 @@ class Transaction {
     int patronId;
     std::string bookTitle;
     Date date;
+    std::string inOrOut; // this will be either "CheckedOut" or "Returned"
     
     public:
-        Transaction(int pid, std::string bt, Date d);
+        Transaction(int pid, std::string bt, Date d, std::string inOrOut);
         void displayTransaction() const;
 };
 

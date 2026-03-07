@@ -155,7 +155,7 @@ void Library::addPatron(const Patron &p) {
 void Library::checkoutBook(int patronId, std::string title) {
     for (int i = 0; i < patrons.size(); i++) {
         if (patrons.at(i).getId() == patronId) {
-            patrons.at(i).borrowBook(nullptr, books);
+            patrons.at(i).borrowBook(nullptr, books, transactions);
             return;
         }
     }
@@ -165,7 +165,7 @@ void Library::checkoutBook(int patronId, std::string title) {
 void Library::returnBook(int patronId, std::string title) {
     for (int i = 0; i < patrons.size(); i++) {
         if (patrons.at(i).getId() == patronId) {
-            patrons.at(i).returnBook(nullptr, books);
+            patrons.at(i).returnBook(nullptr, books, transactions);
             return;
         }
     }
@@ -189,4 +189,10 @@ Library::~Library() {
         delete book;
     }
     books.clear();
+}
+
+void Library::displayTransactions() const {
+    for (int i = 0; i < transactions.size(); i++) {
+        transactions.at(i).displayTransaction();
+    }
 }

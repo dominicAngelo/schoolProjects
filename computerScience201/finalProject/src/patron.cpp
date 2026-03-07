@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "../include/book.h"
+#include "../include/transaction.h"
 
 Patron::Patron(std::string n, int i) : name(n), id(i) {
     // set the values and do nothing
@@ -15,9 +16,9 @@ std::string Patron::getName() const {
     return name;
 }
 
-void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks) { //we will use the time to make a new transaction,  
+void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks, std::vector<Transaction> &transactions) { //we will use the time to make a new transaction,  
     std::cout << "Please enter the title of the book to borrow: ";   //we will have to convert ctime current time to our current time class and use that when creating a transaction
-    std::string title;                                               // we will add thirty days to current time for the due date
+    std::string title;                                             
     std::getline(std::cin, title);
     for (int i = 0; i < libraryBooks.size(); i++) {
 
@@ -27,10 +28,13 @@ void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks) { //we will u
             if (bookToBorrow->getStatus() == BookStatus::Available) {
                 bookToBorrow->setStatus(BookStatus::CheckedOut);
                 borrowedBooks.push_back(bookToBorrow);
+
+                Transaction transaction(id, title, Date::getCurrentDate(), "Out");
+                transactions.push_back(transaction);
                 std::cout << "You have borrowed the book: " << title << std::endl;
                 return;
             } else {
-                std::cout << "Sorry, the book is currently not available." << std::endl; // TODO: this function should be creating a transaction object.
+                std::cout << "Sorry, the book is currently not available." << std::endl;
                 return;
             }
         }
@@ -39,7 +43,7 @@ void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks) { //we will u
     std::cout << "The book you requested is not available in the library." << std::endl;
 }
 
-void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks) {
+void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks, std::vector<Transaction> &transactions) {
     std::cout << "Please enter the title of the book to return: ";
     std::string title;
     std::getline(std::cin, title);
@@ -48,7 +52,9 @@ void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks) {
         if (this->borrowedBooks[i]->getTitle() == title) {
             Book *bookToReturn = this->borrowedBooks[i];
             bookToReturn->setStatus(BookStatus::Available);
-            this->borrowedBooks.erase(this->borrowedBooks.begin() + i); // TODO: this function should be creating a transaction object.
+            this->borrowedBooks.erase(this->borrowedBooks.begin() + i);
+            Transaction transaction(id, title, Date::getCurrentDate(), "In");
+            transactions.push_back(transaction);
             std::cout << "You have returned the book: " << title << std::endl;
             return;
         }
