@@ -56,6 +56,19 @@ void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks) {
     std::cout << "The book you requested is not in your borrowed list." << std::endl;
 }
 
-void Patron::displayPatron() const {} // TODO implement displayPatron()
+void Patron::displayPatron() const {
+    std::cout << "Patron ID: " << id << ", Name: " << name << std::endl;
+    std::cout << "Borrowed Books: " << std::endl;
+    for (int i = 0; i < borrowedBooks.size(); i++) {
+        std::cout << " -" << borrowedBooks[i]->getTitle() << " by " << borrowedBooks[i]->getAuthor() << std::endl;
+    }
+}
 
-// TODO implement operator overloads
+bool Patron::operator==(const Patron& other) const {
+    return id == other.id && name == other.name;
+}
+
+std::ostream& operator<<(std::ostream& out, const Patron &patron) {
+    out << patron.getId() << "," << patron.getName() << std::endl;
+    return out;
+}

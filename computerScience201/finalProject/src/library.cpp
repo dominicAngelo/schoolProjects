@@ -162,12 +162,24 @@ void Library::addPatron(const Patron &p) {
 }
 
 void Library::checkoutBook(int patronId, std::string title) {
-    // call patron.borrowBook()
-} // TODO implement checkoutBook()
+    for (int i = 0; i < patrons.size(); i++) {
+        if (patrons.at(i).getId() == patronId) {
+            patrons.at(i).borrowBook(nullptr, books);
+            return;
+        }
+    }
+    std::cout << "Patron not found." << std::endl;
+}
 
 void Library::returnBook(int patronId, std::string title) {
-    // call patron.returnBook()
-} // TODO implement returnBook()
+    for (int i = 0; i < patrons.size(); i++) {
+        if (patrons.at(i).getId() == patronId) {
+            patrons.at(i).returnBook(nullptr, books);
+            return;
+        }
+    }
+    std::cout << "Patron not found." << std::endl;
+}
 
 void Library::displayBooks() const {
     for (int i = 0; i < books.size(); i++) {
