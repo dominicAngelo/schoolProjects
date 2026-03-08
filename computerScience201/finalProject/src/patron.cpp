@@ -43,7 +43,7 @@ void Patron::borrowBook(Book *b, std::vector<Book*> &libraryBooks, std::vector<T
     std::cout << "The book you requested is not available in the library." << std::endl;
 }
 
-void Patron::returnBook(Book *b, std::vector<Book*> &borrowedBooks, std::vector<Transaction> &transactions) {
+void Patron::returnBook(Book *b, std::vector<Book*> &libraryBooks, std::vector<Transaction> &transactions) { 
     std::cout << "Please enter the title of the book to return: ";
     std::string title;
     std::getline(std::cin, title);

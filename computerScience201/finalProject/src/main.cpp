@@ -46,6 +46,7 @@ int main() {
             library.displayTransactions();
         } else if (choice == 8) {
             library.saveData();
+            return 0;
         }   
     }
     return 0;
